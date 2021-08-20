@@ -1,0 +1,51 @@
+package test1
+
+object test1 {
+
+  class rational(n:Int, d:Int){
+
+    //Requirement
+    require(d>0, "d must be greater than 0")
+
+    //numorator
+    def numor = n/gcd(n,d)
+    
+    //denominator
+    def denom = d/gcd(n,d)
+
+    //contructor to single parameter object
+    def this(n:Int) = this(n, 1)
+
+    def gcd(a:Int, b:Int):Int = if(b == 0) a else gcd(b, a%b)
+    def add(r:rational) = new rational((this.numor*r.denom) + (r.numor*this.denom), this.denom*r.denom)
+    def +(r:rational) = new rational((this.numor*r.denom) + (r.numor*this.denom), this.denom*r.denom)
+    def neg = new rational(-numor, denom)
+    def -(r:rational) = this + r.neg
+    def less(r:rational) = this.numor*r.denom < r.numor*this.denom
+    def max(r:rational) = if(this.less(r)) r else this
+
+    override def toString = numor+"/"+denom
+  }
+
+  def main(args: Array[String]): Unit = {
+
+      var r1 = new rational(5)
+      var r2 = new rational(4,2)
+      var r3 = r1.add(r2)
+      var r4 = r1 + r2
+      var r5 = r1 - r2
+
+      println("r1 = " + r1)
+      println("r2 = " + r2)
+      println("r1 add(r2) = " + r3)
+      println("r1 + r2 = " + r4)
+      println("negative of r1 = " + r1.neg)
+      println("r1 - r2 = " + r5)
+      println("r1 less than r2 = " + r1.less(r2))
+      println("maximum between r1, r2 = " + r1.max(r2))
+
+  }
+
+
+
+}
